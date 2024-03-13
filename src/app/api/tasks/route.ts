@@ -31,8 +31,8 @@ export async function POST(req: Request) {
         title,
         description,
         date,
-        isCompleted: completed,
-        isImportant: important,
+        isCompleted: completed ? true : false,
+        isImportant: important ? true : false,
         userId,
       },
     });
