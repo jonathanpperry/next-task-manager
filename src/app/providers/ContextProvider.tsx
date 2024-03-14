@@ -14,10 +14,16 @@ function ContextProvider({ children }: Props) {
   React.useEffect(() => {
     setTimeout(() => {
       setIsReady(true);
-    }, 200);
+    }, 250);
   }, []);
 
-  if (!isReady) return null;
+  if (!isReady) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <span className="loader"></span>
+      </div>
+    );
+  }
 
   return (
     <GlobalProvider>

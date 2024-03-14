@@ -19,6 +19,7 @@ function Tasks({ title, tasks }: Props) {
       {/* {modal && <Modal content={<CreateContent />} />} */}
 
       <h1>{title}</h1>
+      <CreateContent />
       <div className="tasks grid">
         {tasks.map((task) => (
           <TaskItem
