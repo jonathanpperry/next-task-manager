@@ -40,10 +40,18 @@ export const GlobalProvider = ({ children }) => {
 
       allTasks();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Something went wrong");
     }
   };
+
+  const completedTasks = tasks.filter((task) => task.isCompleted === true);
+  const importantTasks = tasks.filter((task) => task.isImportant === true);
+  const incompleteTasks = tasks.filter((task) => task.isCompleted === false);
+
+  // console.log("Completed: ", completedTasks);
+  // console.log("importantTasks: ", importantTasks);
+  // console.log("incompleteTasks: ", incompleteTasks);
 
   useEffect(() => {
     if (user) allTasks();
@@ -56,6 +64,9 @@ export const GlobalProvider = ({ children }) => {
         tasks,
         deleteTask,
         isLoading,
+        completedTasks,
+        importantTasks,
+        incompleteTasks,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>

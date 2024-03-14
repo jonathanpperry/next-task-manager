@@ -37,11 +37,9 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log("Task Created: ", task);
-
     return NextResponse.json(task);
   } catch (error) {
-    console.log("Error in creating task: ", error);
+    console.error("Error in creating task: ", error);
     return NextResponse.json({ error: "Error creating task", status: 500 });
   }
 }
@@ -62,7 +60,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(tasks);
   } catch (error) {
-    console.log("Error getting tasks: ", error);
+    console.error("Error getting tasks: ", error);
     return NextResponse.json({ error: "Error getting tasks", status: 500 });
   }
 }
@@ -70,7 +68,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
   try {
   } catch (error) {
-    console.log("Error updating task: ", error);
+    console.error("Error updating task: ", error);
     return NextResponse.json({ error: "Error updating task", status: 500 });
   }
 }
@@ -78,7 +76,7 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
   } catch (error) {
-    console.log("Error deleting tasks: ", error);
+    console.error("Error deleting tasks: ", error);
     return NextResponse.json({ error: "Error deleting tasks", status: 500 });
   }
 }
