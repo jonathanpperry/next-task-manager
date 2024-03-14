@@ -48,24 +48,37 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-  } catch (err) {
-    console.log("Error getting tasks: ", err);
+    const { userId } = auth();
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized", status: 401 });
+    }
+
+    const tasks = await prisma.task.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    return NextResponse.json(tasks);
+  } catch (error) {
+    console.log("Error getting tasks: ", error);
     return NextResponse.json({ error: "Error getting tasks", status: 500 });
   }
 }
 
 export async function PUT(req: Request) {
   try {
-  } catch (err) {
-    console.log("Error updating task: ", err);
+  } catch (error) {
+    console.log("Error updating task: ", error);
     return NextResponse.json({ error: "Error updating task", status: 500 });
   }
 }
 
 export async function DELETE(req: Request) {
   try {
-  } catch (err) {
-    console.log("Error deleting tasks: ", err);
+  } catch (error) {
+    console.log("Error deleting tasks: ", error);
     return NextResponse.json({ error: "Error deleting tasks", status: 500 });
   }
 }
