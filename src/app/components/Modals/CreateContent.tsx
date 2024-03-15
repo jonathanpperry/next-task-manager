@@ -94,7 +94,7 @@ function CreateContent() {
         />
       </div>
       <div className="input-control">
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">Date</label>
         <input
           value={date}
           onChange={handleChange("date")}
