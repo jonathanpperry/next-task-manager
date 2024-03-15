@@ -20,6 +20,13 @@ export const GlobalProvider = ({ children }) => {
 
   const theme = themes[selectedTheme];
 
+  const openModal = () => {
+    setModal(true);
+  };
+  const closeModal = () => {
+    setModal(false);
+  };
+
   const allTasks = async () => {
     setIsLoading(true);
 
@@ -45,13 +52,22 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const updateTask = async (task) => {
+    try {
+      const res = await axios.put(`/api/tasks`, task);
+
+      toast.success("Task updated!");
+
+      allTasks();
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   const completedTasks = tasks.filter((task) => task.isCompleted === true);
   const importantTasks = tasks.filter((task) => task.isImportant === true);
   const incompleteTasks = tasks.filter((task) => task.isCompleted === false);
-
-  // console.log("Completed: ", completedTasks);
-  // console.log("importantTasks: ", importantTasks);
-  // console.log("incompleteTasks: ", incompleteTasks);
 
   useEffect(() => {
     if (user) allTasks();
@@ -67,6 +83,11 @@ export const GlobalProvider = ({ children }) => {
         completedTasks,
         importantTasks,
         incompleteTasks,
+        updateTask,
+        modal,
+        openModal,
+        closeModal,
+        allTasks
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>
