@@ -36,7 +36,7 @@ export const GlobalProvider = ({ children }) => {
 
     try {
       const res = await axios.get("/api/tasks");
-      const sorted = res.data.sort((a, b) => {
+      const sorted = res?.data.sort((a, b) => {
         return (
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
@@ -54,7 +54,7 @@ export const GlobalProvider = ({ children }) => {
       const res = await axios.delete(`/api/tasks/${id}`);
       toast.success("Task deleted");
 
-      allTasks();
+      await allTasks();
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
@@ -67,7 +67,7 @@ export const GlobalProvider = ({ children }) => {
 
       toast.success("Task updated!");
 
-      allTasks();
+      await allTasks();
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");

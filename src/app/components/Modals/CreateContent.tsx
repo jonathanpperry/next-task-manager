@@ -58,7 +58,7 @@ function CreateContent() {
 
       if (!res.data.error) {
         toast.success("Task created successfully.");
-        allTasks();
+        await allTasks();
         // Close modal on successful submit
         closeModal();
       }
