@@ -1,16 +1,16 @@
 "use client";
-
-import { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 import themes from "./themes";
 import axios from "axios";
-import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/nextjs";
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const { user } = useUser();
+
   const [selectedTheme, setSelectedTheme] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [modal, setModal] = useState(false);
@@ -23,6 +23,7 @@ export const GlobalProvider = ({ children }) => {
   const openModal = () => {
     setModal(true);
   };
+
   const closeModal = () => {
     setModal(false);
   };
@@ -33,20 +34,20 @@ export const GlobalProvider = ({ children }) => {
 
   const allTasks = async () => {
     setIsLoading(true);
-
     try {
       const res = await axios.get("/api/tasks");
-      console.log('res.data: ', res.data);
-      const sorted = res?.data?.sort((a, b) => {
+
+      const sorted = res.data.sort((a, b) => {
         return (
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       });
 
       setTasks(sorted);
+
       setIsLoading(false);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -55,9 +56,9 @@ export const GlobalProvider = ({ children }) => {
       const res = await axios.delete(`/api/tasks/${id}`);
       toast.success("Task deleted");
 
-      await allTasks();
+      allTasks();
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Something went wrong");
     }
   };
@@ -66,11 +67,11 @@ export const GlobalProvider = ({ children }) => {
     try {
       const res = await axios.put(`/api/tasks`, task);
 
-      toast.success("Task updated!");
+      toast.success("Task updated");
 
-      await allTasks();
+      allTasks();
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Something went wrong");
     }
   };
@@ -79,7 +80,7 @@ export const GlobalProvider = ({ children }) => {
   const importantTasks = tasks.filter((task) => task.isImportant === true);
   const incompleteTasks = tasks.filter((task) => task.isCompleted === false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (user) allTasks();
   }, [user]);
 
@@ -110,4 +111,3 @@ export const GlobalProvider = ({ children }) => {
 };
 
 export const useGlobalState = () => useContext(GlobalContext);
-export const useGlobalUpdate = () => useContext(GlobalUpdateContext);

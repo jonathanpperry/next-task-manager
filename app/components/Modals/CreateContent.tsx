@@ -5,8 +5,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import Button from "../Button/Button";
-import { plus } from "@/app/utils/Icons";
-import { useGlobalState } from "@/app/context/globalProvider";
+import { plus } from "../../utils/Icons";
+import { useGlobalState } from "../../context/globalProvider";
 
 function CreateContent() {
   const [title, setTitle] = useState("");

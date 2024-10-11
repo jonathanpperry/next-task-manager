@@ -1,4 +1,4 @@
-import prisma from "@/app/utils/connect";
+import prisma from "../../utils/connect";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -31,15 +31,15 @@ export async function POST(req: Request) {
         title,
         description,
         date,
-        isCompleted: completed ? true : false,
-        isImportant: important ? true : false,
+        isCompleted: completed,
+        isImportant: important,
         userId,
       },
     });
 
     return NextResponse.json(task);
   } catch (error) {
-    console.error("Error in creating task: ", error);
+    console.log("ERROR CREATING TASK: ", error);
     return NextResponse.json({ error: "Error creating task", status: 500 });
   }
 }
@@ -54,14 +54,14 @@ export async function GET(req: Request) {
 
     const tasks = await prisma.task.findMany({
       where: {
-        userId: userId,
+        userId,
       },
     });
 
     return NextResponse.json(tasks);
   } catch (error) {
-    console.error("Error getting tasks: ", error);
-    return NextResponse.json({ error: "Error getting tasks", status: 500 });
+    console.log("ERROR GETTING TASKS: ", error);
+    return NextResponse.json({ error: "Error updating task", status: 500 });
   }
 }
 
@@ -82,9 +82,10 @@ export async function PUT(req: Request) {
         isCompleted,
       },
     });
+
     return NextResponse.json(task);
   } catch (error) {
-    console.error("Error updating task: ", error);
-    return NextResponse.json({ error: "Error updating task", status: 500 });
+    console.log("ERROR UPDATING TASK: ", error);
+    return NextResponse.json({ error: "Error deleting task", status: 500 });
   }
 }
